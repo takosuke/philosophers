@@ -36,7 +36,12 @@ void	init_philosophers(t_restaurant *restaurant)
 	i = 0;
 	while (i < restaurant->num_philosophers)
 	{
-		restaurant->philosophers[i].id = i;
+		restaurant->philosophers[i].id = i + 1;
+		restaurant->philosophers[i].l_fork = &(restaurant->forks[i]);
+		if (i != restaurant->num_philosophers - 1)
+			restaurant->philosophers[i].r_fork = &(restaurant->forks[i + 1]);
+		else
+			restaurant->philosophers[i].r_fork = &(restaurant->forks[0]);
 		printf("%ld\n", i);
 		i++;
 	}
@@ -57,6 +62,7 @@ int		main(int argc, char **argv)
 		while (i < restaurant->num_philosophers)
 		{
 			printf("Philosopher id: %d\n", restaurant->philosophers[i].id);
+			printf("Left fork id: %d \t Right fork id: %d\n", restaurant->philosophers[i].l_fork->id, restaurant->philosophers[i].r_fork->id);
 			i++;
 		}
 	}

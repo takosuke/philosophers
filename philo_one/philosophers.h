@@ -9,15 +9,17 @@
 
 //typedef struct philosopher_s philosopher_t;
 
-typedef struct	s_philo
-{
-	int	id;
-} t_philo;
-
 typedef struct	s_fork
 {
 	int	id;
 }	t_fork;
+
+typedef struct	s_philo
+{
+	int	id;
+	t_fork	*l_fork;
+	t_fork	*r_fork;
+} t_philo;
 
 typedef struct	s_restaurant
 {
