@@ -11,14 +11,18 @@
 
 typedef struct	s_fork
 {
-	int	id;
+	int				id;
+	pthread_mutex	fork;
 }	t_fork;
 
 typedef struct	s_philo
 {
 	int	id;
-	t_fork	*l_fork;
-	t_fork	*r_fork;
+	t_fork		*l_fork;
+	t_fork		*r_fork;
+	pthread_t	thread_id;
+	long		last_ate_time;
+	long		times_to_eat;
 } t_philo;
 
 typedef struct	s_restaurant
@@ -29,7 +33,6 @@ typedef struct	s_restaurant
 	long		time_to_die;
 	long		time_to_eat;
 	long		time_to_sleep;
-	long		max_meals;
 }	t_restaurant;
 
 #endif

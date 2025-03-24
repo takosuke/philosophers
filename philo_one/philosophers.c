@@ -27,7 +27,7 @@ void	init_forks(t_restaurant *restaurant)
 	}
 }
 
-void	init_philosophers(t_restaurant *restaurant)
+void	init_philosophers(t_restaurant *restaurant, long times_to_eat)
 {
 	long	i;
 
@@ -37,6 +37,7 @@ void	init_philosophers(t_restaurant *restaurant)
 	while (i < restaurant->num_philosophers)
 	{
 		restaurant->philosophers[i].id = i + 1;
+		restaurant->philosophers[i].times_to_eat = times_to_eat;
 		restaurant->philosophers[i].l_fork = &(restaurant->forks[i]);
 		if (i != restaurant->num_philosophers - 1)
 			restaurant->philosophers[i].r_fork = &(restaurant->forks[i + 1]);
@@ -47,24 +48,32 @@ void	init_philosophers(t_restaurant *restaurant)
 	}
 }
 
+void	*eat()
+{
+}
+
 int		main(int argc, char **argv)
 {
 	t_restaurant	*restaurant;
 //	if (argc == 6)
+//
 //	set a max_meals option or something
-	if (argc > 4)
+	if (argc > 4 && argc < 7)
 	{
+		// check for arg errors
 		restaurant = init_restaurant(argv);
-		printf("Restaurant num_philosophers: %ld\n", restaurant->num_philosophers);
 		init_forks(restaurant);
-		init_philosophers(restaurant);
+		if (argc == 6)
+			init_philosophers(restaurant, argv[5]);
+		else
+			init_philosophers(restaurant, -1);
 		int i = 0;
-		while (i < restaurant->num_philosophers)
-		{
-			printf("Philosopher id: %d\n", restaurant->philosophers[i].id);
-			printf("Left fork id: %d \t Right fork id: %d\n", restaurant->philosophers[i].l_fork->id, restaurant->philosophers[i].r_fork->id);
-			i++;
-		}
+		// start sim
+		// clean
 	}
+	/*
+	else
+		error
+		*/
 	return (0);
 }
