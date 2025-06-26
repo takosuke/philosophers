@@ -18,17 +18,9 @@ long	ft_atol(const char *str)
 	return (res);
 }
 
-int	main(int argc, char **argv)
+t_restaurant *init_restaurant(int argc, char **argv)
 {
-	int	i;
-	t_restaurant *restaurant;
-
-	i = 1;
-	if (argc < 5 || argc > 6)
-	{
-		printf("Usage: ./philosophers {number_of_philosophers} {time_to_eat} {time_to_sleep} (optional){number_of_times_each_philosopher_must_ear}\n");
-		return (1);
-	}
+	t_restaurant	*restaurant;
 	restaurant = malloc(sizeof(t_restaurant));
 	if (restaurant == NULL)
 		return (1);
@@ -40,6 +32,23 @@ int	main(int argc, char **argv)
 		restaurant->max_meals = ft_atol(argv[5]);
 	else
 		restaurant->max_meals = -1;
+	return (restaurant);
+}
+
+int	main(int argc, char **argv)
+{
+	int	i;
+	t_restaurant *restaurant;
+
+	i = 1;
+	if (argc < 5 || argc > 6)
+	{
+		printf("Usage: ./philosophers {number_of_philosophers} {time_to_eat} {time_to_sleep} (optional){number_of_times_each_philosopher_must_ear}\n");
+		return (1);
+	}
+	restaurant = init_restaurant(argc, argv);
+	if (restaurant == NULL)
+		return (1);
 	free(restaurant);
 	return (0);
 }
