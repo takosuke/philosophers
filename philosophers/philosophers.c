@@ -23,7 +23,7 @@ t_restaurant *init_restaurant(int argc, char **argv)
 	t_restaurant	*restaurant;
 	restaurant = malloc(sizeof(t_restaurant));
 	if (restaurant == NULL)
-		return (1);
+		return (NULL);
 	restaurant->num_philosophers = ft_atol(argv[1]);
 	restaurant->time_to_die = ft_atol(argv[2]);
 	restaurant->time_to_eat = ft_atol(argv[3]);
