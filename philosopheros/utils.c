@@ -18,7 +18,7 @@ int	ft_atoi(const char *str)
 	return (res);
 }
 
-size_t	get_current_time(void)
+static size_t	get_current_time(void)
 {
 	struct timeval	time;
 

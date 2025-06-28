@@ -3,17 +3,20 @@
 void	init_philosophers(t_restaurant *restaurant)
 {
 	int	i;
+	t_philosopher	philo;
 
 	i = 0;
 	while (i < restaurant->num_philosophers)
 	{
-		restaurant->philosophers[i].id = i;
-		restaurant->philosophers[i].times_to_eat = restaurant->max_meals;
+		philo = restaurant->philosophers[i];
+		philo.restaurant = restaurant;
+		philo.id = i;
+		philo.times_to_eat = restaurant->max_meals;
 		if (i == 0)
-			restaurant->philosophers[i].l_fork = &restaurant->forks[restaurant->num_philosophers - 1];
+			philo.l_fork = &restaurant->forks[restaurant->num_philosophers - 1];
 		else
-			restaurant->philosophers[i].l_fork = &restaurant->forks[i - 1];
-		restaurant->philosophers[i].r_fork = &restaurant->forks[i];
+			philo.l_fork = &restaurant->forks[i - 1];
+		philo.r_fork = &restaurant->forks[i];
 		i++;
 	}
 }
