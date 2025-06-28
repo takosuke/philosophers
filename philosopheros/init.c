@@ -1,0 +1,51 @@
+#include "philosophers.h"
+
+void	init_philosophers(t_restaurant *restaurant)
+{
+	int	i;
+
+	i = 0;
+	while (i < restaurant->num_philosophers)
+	{
+		restaurant->philosophers[i].id = i;
+		restaurant->philosophers[i].times_to_eat = restaurant->max_meals;
+		if (i == 0)
+			restaurant->philosophers[i].l_fork = &restaurant->forks[restaurant->num_philosophers - 1];
+		else
+			restaurant->philosophers[i].l_fork = &restaurant->forks[i - 1];
+		restaurant->philosophers[i].r_fork = &restaurant->forks[i];
+		i++;
+	}
+}
+
+void	init_forks(t_restaurant *restaurant)
+{
+	int	i;
+
+	i = 0;
+	while (i < restaurant->num_philosophers)
+	{
+		pthread_mutex_init(&restaurant->forks[i], NULL);
+		i++;
+	}
+}
+
+t_restaurant init_restaurant(int argc, char **argv)
+{
+	t_restaurant	restaurant;
+	restaurant.num_philosophers = ft_atoi(argv[1]);
+	restaurant.time_to_die = ft_atoi(argv[2]);
+	restaurant.time_to_eat = ft_atoi(argv[3]);
+	restaurant.time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		restaurant.max_meals = ft_atoi(argv[5]);
+	else
+		restaurant.max_meals = -1;
+	restaurant.philosophers = malloc(sizeof(t_philosopher) * restaurant.num_philosophers);
+//	if (restaurant.philosophers == NULL)
+//		return (NULL);
+	restaurant.forks = malloc(sizeof(pthread_mutex_t) * restaurant.num_philosophers);
+//	if (restaurant.forks == NULL)
+//		return (NULL);
+	return (restaurant);
+}
