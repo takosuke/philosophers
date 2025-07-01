@@ -3,20 +3,20 @@
 void	init_philosophers(t_restaurant *restaurant)
 {
 	int	i;
-	t_philosopher	philo;
+	t_philosopher	*philo;
 
 	i = 0;
 	while (i < restaurant->num_philosophers)
 	{
-		philo = restaurant->philosophers[i];
-		philo.restaurant = restaurant;
-		philo.id = i;
-		philo.times_to_eat = restaurant->max_meals;
+		philo = &restaurant->philosophers[i];
+		philo->restaurant = restaurant;
+		philo->id = i;
+		philo->times_eaten = 0;
 		if (i == 0)
-			philo.l_fork = &restaurant->forks[restaurant->num_philosophers - 1];
+			philo->l_fork = &restaurant->forks[restaurant->num_philosophers - 1];
 		else
-			philo.l_fork = &restaurant->forks[i - 1];
-		philo.r_fork = &restaurant->forks[i];
+			philo->l_fork = &restaurant->forks[i - 1];
+		philo->r_fork = &restaurant->forks[i];
 		i++;
 	}
 }
@@ -40,6 +40,7 @@ t_restaurant init_restaurant(int argc, char **argv)
 	restaurant.time_to_die = ft_atoi(argv[2]);
 	restaurant.time_to_eat = ft_atoi(argv[3]);
 	restaurant.time_to_sleep = ft_atoi(argv[4]);
+	restaurant.closed = 0;
 	if (argc == 6)
 		restaurant.max_meals = ft_atoi(argv[5]);
 	else

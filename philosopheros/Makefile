@@ -1,6 +1,6 @@
 NAME	= philosophers
 CFLAGS	:= -g -Wall -Wextra -Werror
-CFILES	= utils.c init.c main.c
+CFILES	= utils.c init.c main.c threads.c
 
 .PHONY: all
 all: $(NAME) 
