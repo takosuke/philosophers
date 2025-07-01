@@ -22,6 +22,11 @@ void	powernap(t_philosopher *philosopher)
 	ft_usleep(philosopher->restaurant->time_to_sleep);
 }
 
+void	philosophize(t_philosopher *philosopher)
+{
+	printf("philosopher %d is thinking\n", philosopher->id);
+}
+
 void	*philosophical_routine(void *philosopher_ptr)
 {
 	t_philosopher	*philosopher;
@@ -32,6 +37,7 @@ void	*philosophical_routine(void *philosopher_ptr)
 	{
 		eat(philosopher);
 		powernap(philosopher);
+		philosophize(philosopher);
 	}
 	return (NULL);
 }
