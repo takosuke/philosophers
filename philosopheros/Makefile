@@ -1,5 +1,5 @@
 NAME	= philosophers
-CFLAGS	:= -g -Wall -Wextra -Werror
+CFLAGS	:= -g -Wall -Wextra -Werror -pthread
 CFILES	= utils.c init.c main.c threads.c
 
 .PHONY: all

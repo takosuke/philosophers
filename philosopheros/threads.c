@@ -2,9 +2,9 @@
 
 void	eat(t_philosopher *philosopher)
 {
-//	pthread_mutex_lock(philosopher->l_fork);
+	pthread_mutex_lock(philosopher->l_fork);
 	printf("%d...has taken a fork\n", philosopher->id); // TODO timestamp, philosopher id?
-//	pthread_mutex_lock(philosopher->r_fork);
+	pthread_mutex_lock(philosopher->r_fork);
 	printf("%d...has taken a fork\n", philosopher->id); // TODO timestamp, philosopher id?
 	philosopher->times_eaten++;
 	if (philosopher->times_eaten == philosopher->restaurant->max_meals)
@@ -12,8 +12,8 @@ void	eat(t_philosopher *philosopher)
 	printf("%d...is eating\n", philosopher->id); // TODO timestamp, philosopher id?
 	// TODO set a flag that this philosopher is eating?but what for?
 	ft_usleep(philosopher->restaurant->time_to_eat);
-//	pthread_mutex_unlock(philosopher->l_fork);
-//	pthread_mutex_unlock(philosopher->r_fork);
+	pthread_mutex_unlock(philosopher->l_fork);
+	pthread_mutex_unlock(philosopher->r_fork);
 }
 
 void	powernap(t_philosopher *philosopher)
@@ -26,8 +26,8 @@ void	*philosophical_routine(void *philosopher_ptr)
 {
 	t_philosopher	*philosopher;
 	philosopher = (t_philosopher *)philosopher_ptr;
-	ft_usleep(philosopher->id);
 	printf("philosopher %d at the table\n", philosopher->id);
+	ft_usleep(philosopher->id);
 	while (!philosopher->restaurant->closed) //TODO check for deaths
 	{
 		eat(philosopher);
@@ -49,6 +49,7 @@ void	open_restaurant(t_restaurant *restaurant)
 			printf("thread creation error\n"); // TODO teardown
 		i++;
 	}
+	i = 0;
 	while (i < restaurant->num_philosophers)
 	{
 		if (pthread_join(restaurant->philosophers[i].thread_id, NULL) != 0)
