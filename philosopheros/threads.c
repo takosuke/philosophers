@@ -2,14 +2,20 @@
 
 void	eat(t_philosopher *philosopher)
 {
+	size_t	eat_time;
+
+	eat_time = get_current_time() - philosopher->restaurant->opening_time;
+	if (eat_time > philosopher->last_meal_time + philosopher->restaurant->time_to_die)
+		philosopher->restaurant->closed = 1;
 	pthread_mutex_lock(philosopher->l_fork);
-	printf("%d...has taken a fork\n", philosopher->id); // TODO timestamp, philosopher id?
+	printf("%zu %d has taken a fork\n", get_current_time() - philosopher->restaurant->opening_time, philosopher->id); // TODO timestamp, philosopher id?
 	pthread_mutex_lock(philosopher->r_fork);
-	printf("%d...has taken a fork\n", philosopher->id); // TODO timestamp, philosopher id?
+	printf("%zu %d has taken a fork\n", get_current_time() - philosopher->restaurant->opening_time, philosopher->id); // TODO timestamp, philosopher id?
 	philosopher->times_eaten++;
+	philosopher->last_meal_time = get_current_time() - philosopher->restaurant->opening_time;
 	if (philosopher->times_eaten == philosopher->restaurant->max_meals)
 		philosopher->restaurant->closed = 1;
-	printf("%d...is eating\n", philosopher->id); // TODO timestamp, philosopher id?
+	printf("%d is eating\n", philosopher->id); // TODO timestamp, philosopher id?
 	// TODO set a flag that this philosopher is eating?but what for?
 	ft_usleep(philosopher->restaurant->time_to_eat);
 	pthread_mutex_unlock(philosopher->l_fork);
@@ -47,6 +53,7 @@ void	open_restaurant(t_restaurant *restaurant)
 	int	i;
 
 	i = 0;
+	printf("Restaurant open at %zu\n", restaurant->opening_time);
 	while (i < restaurant->num_philosophers)
 	{
 		printf("philosopher %d has entered the restaurant\n", i);

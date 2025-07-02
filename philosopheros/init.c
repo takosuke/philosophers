@@ -12,6 +12,7 @@ void	init_philosophers(t_restaurant *restaurant)
 		philo->restaurant = restaurant;
 		philo->id = i;
 		philo->times_eaten = 0;
+		philo->last_meal_time = restaurant->opening_time;;
 		if (i == 0)
 			philo->l_fork = &restaurant->forks[restaurant->num_philosophers - 1];
 		else
@@ -41,6 +42,7 @@ t_restaurant init_restaurant(int argc, char **argv)
 	restaurant.time_to_eat = ft_atoi(argv[3]);
 	restaurant.time_to_sleep = ft_atoi(argv[4]);
 	restaurant.closed = 0;
+	restaurant.opening_time = get_current_time();
 	if (argc == 6)
 		restaurant.max_meals = ft_atoi(argv[5]);
 	else
